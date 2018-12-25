@@ -76,7 +76,10 @@ git config --global user.email="$gitMail"
 git config --global user.name="$gitName"
 
 echo "Installation de phpStorm"
+
 sudo snap install phpstorm --classic
+echo "alias pstorm='snap run phpstorm 2>/dev/null &'" >> /home/$user/.bashrc
+echo "alias pstorm='snap run phpstorm 2>/dev/null &'" >> /home/$user/.zshrc
 
 echo "Installation de SublimeText 3"
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
