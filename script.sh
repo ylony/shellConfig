@@ -62,7 +62,7 @@ sudo echo 'source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh' >> /home/$
 
 echo "Installation du theme hyper-snazzy pour hyper"
 
-hyper install hyper-snazzy >/dev/null
+hyper install hyper-snazzy > /dev/null
 
 echo "Installation du syntax highlighter pour zsh"
 
@@ -74,6 +74,23 @@ echo "Configuration de git :"
 
 git config --global user.email="$gitMail"
 git config --global user.name="$gitName"
+
+echo "Installation de phpStorm"
+sudo snap install phpstorm --classic
+
+echo "Installation de SublimeText 3"
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+sudo apt-get install -y apt-transport-https > /dev/null
+echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo apt-get install -y sublime-text > /dev/null
+
+echo "Installation de VScode"
+wget "https://az764295.vo.msecnd.net/stable/dea8705087adb1b5e5ae1d9123278e178656186a/code_1.30.1-1545156774_amd64.deb" -q --show-progress
+sudo dpkg -i code_1.30.1-1545156774_amd64.deb > /dev/null
+
+echo "Installation de Vim"
+sudo apt-get install -y vim > /dev/null
 
 END=$(date +%s)
 DIFF=$(( $END - $START ))
