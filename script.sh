@@ -12,8 +12,8 @@ echo "User selectionné : $user, la version du script est : $version"
 echo "Installation de Git, Zsh et des libs pour le terminal Hyper"
 
 sudo apt-get update > /dev/null
-sudo apt-get install -y git zsh libdbusmenu-gtk4 libappindicator1 libindicator7 > /dev/null
-
+sudo apt-get install -y git zsh libdbusmenu-gtk4 libappindicator1 libindicator7 libgconf-2-4 libx11-xcb-dev > /dev/null
+sudo apt-get install gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 # Firefox
 
 echo "Téléchargement de Firefox"
@@ -40,9 +40,9 @@ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install
 
 echo "Téléchargement du terminal Hyper"
 
-wget 'https://github-production-release-asset-2e65be.s3.amazonaws.com/62367558/8b05cf00-0078-11e9-8b9c-3b6266436298?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20181225%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181225T105017Z&X-Amz-Expires=300&X-Amz-Signature=8853ee88046a749a793199d8e6686d8e3a536a650d9b87cf6ef81439834ffc6b&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Dhyper_2.1.0_amd64.deb&response-content-type=application%2Foctet-stream' -q --show-progress
-
-sudo dpkg -i ./hyper_2.1.0_amd64.deb > /dev/null
+wget https://releases.hyper.is/download/deb -q --show-progress
+sudo rm -rf ./deb
+sudo dpkg -i deb
 
 echo "Installation du theme zsh Pure"
 git clone https://github.com/sindresorhus/pure > /dev/null
@@ -73,7 +73,7 @@ echo "source $(pwd)/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /hom
 echo "Configuration de git :"
 
 git config --global user.email="$gitMail"
-git config --global user.name="$gitName"
+git config --global user.name \""$gitName"\"
 
 echo "Installation de phpStorm"
 
@@ -86,6 +86,7 @@ wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add
 sudo apt-get install -y apt-transport-https > /dev/null
 echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo apt-get update > /dev/null
 sudo apt-get install -y sublime-text > /dev/null
 
 echo "Installation de VScode"
@@ -96,19 +97,13 @@ echo "Installation de Vim"
 sudo apt-get install -y vim > /dev/null
 
 echo "Installation de Docker & Docker-Compose"
-sudo apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common > /dev/null
 
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-sudo apt-get update > /dev/null
-sudo apt-get install -y docker-ce > /dev/null
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
+sudo apt update
+sudo apt install docker-ce
+
 sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
