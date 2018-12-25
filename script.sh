@@ -40,8 +40,8 @@ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install
 
 echo "Téléchargement du terminal Hyper"
 
-wget https://releases.hyper.is/download/deb -q --show-progress
 sudo rm -rf ./deb
+wget https://releases.hyper.is/download/deb -q --show-progress
 sudo dpkg -i deb
 
 echo "Installation du theme zsh Pure"
