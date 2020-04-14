@@ -3,7 +3,7 @@ START=$(date +%s)
 user='ylony'
 version='0.1 - 25-12-18'
 gitName="Dimitri BERGER"
-gitMail="hylow423@gmail.com"
+gitMail="d-berger@sfi.fr"
 
 echo "User selectionné : $user, la version du script est : $version"
 
@@ -11,18 +11,19 @@ echo "User selectionné : $user, la version du script est : $version"
 
 echo "Installation de Git, Zsh et des libs pour le terminal Hyper"
 
+sudo apt update && apt upgrade -y
 sudo apt-get update > /dev/null
 sudo apt-get install -y git zsh libdbusmenu-gtk4 libappindicator1 libindicator7 libgconf-2-4 libx11-xcb-dev > /dev/null
-sudo apt-get install gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+sudo apt-get install gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget curl
 # Firefox
 
 echo "Téléchargement de Firefox"
 
-wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/65.0b6/linux-x86_64/fr/firefox-65.0b6.tar.bz2 -q --show-progress
+wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/76.0b4/linux-x86_64/fr/firefox-76.0b4.tar.bz2 -q --show-progress
 
 echo "Extraction ..."
 
-sudo tar -xf firefox-65.0b6.tar.bz2 
+sudo tar -xf firefox-76.0b4.tar.bz2 
 
 sudo mkdir /opt
 
@@ -46,6 +47,7 @@ sudo dpkg -i deb
 
 echo "Installation du theme zsh Pure"
 git clone https://github.com/sindresorhus/pure > /dev/null
+mkdir -p /usr/local/share/zsh/site-functions
 sudo ln -s "$PWD/pure/pure.zsh" /usr/local/share/zsh/site-functions/prompt_pure_setup
 sudo ln -s "$PWD/pure/async.zsh" /usr/local/share/zsh/site-functions/async
 
@@ -90,23 +92,34 @@ sudo apt-get update > /dev/null
 sudo apt-get install -y sublime-text > /dev/null
 
 echo "Installation de VScode"
-wget "https://az764295.vo.msecnd.net/stable/dea8705087adb1b5e5ae1d9123278e178656186a/code_1.30.1-1545156774_amd64.deb" -q --show-progress
-sudo dpkg -i code_1.30.1-1545156774_amd64.deb > /dev/null
+wget "https://az764295.vo.msecnd.net/stable/a9f8623ec050e5f0b44cc8ce8204a1455884749f/code_1.44.1-1586789296_amd64.deb" -q --show-progress
+sudo dpkg -i code_1.44.1-1586789296_amd64.deb > /dev/null
 
 echo "Installation de Vim"
 sudo apt-get install -y vim > /dev/null
 
 echo "Installation de Docker & Docker-Compose"
 
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
-sudo apt update
-sudo apt install docker-ce
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
 
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-
+sudo apt install gconf2
 END=$(date +%s)
 DIFF=$(( $END - $START ))
 
